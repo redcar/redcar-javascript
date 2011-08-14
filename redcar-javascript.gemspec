@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary     = "Redcar extensions for JavaScript development"
   s.description = ""
  
-  s.files        = Dir.glob("{lib,features,vendor}/**/*") + %w(plugin.rb)
+  s.files        = Dir.glob("{lib,features,vendor}/**/*") + %w(plugin.rb LICENSE)
   s.executables  = []
   s.require_path = 'lib'
 end
