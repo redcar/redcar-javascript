@@ -2,14 +2,13 @@
 module Redcar
   module SyntaxCheck
     class JavaScript < Checker
-      supported_grammars  "JavaScript", "JavaScript (Rails)",
-                          "jQuery (JavaScript)", "HTML"
+      supported_grammars  "JavaScript", "HTML"
 
-      def jslint_path
-        File.join(File.dirname(__FILE__),'..','..','vendor','jslint.js')
+      def lint
+        File.join(File.dirname(__FILE__),'..','..','vendor','jshint-rhino.js')
       end
 
-      def rhino_path
+      def rhino
         File.join(File.expand_path('../../../vendor/rhino1_7R3.jar', __FILE__))
       end
 
@@ -30,7 +29,7 @@ module Redcar
           SyntaxCheck.remove_syntax_error_annotations(doc.edit_view)
           Thread.current[:doc] = doc
           begin
-            output = `java -cp #{rhino_path} #{main_method} #{jslint_path} #{path}`
+            output = `java -cp #{rhino} #{main_method} #{jshint} #{path}`
             output.each_line do |line|
               if line =~ /Lint at line (\d+) character (\d+): (.*)/
                 SyntaxCheck::Error.new(doc, $1.to_i-1, $3).annotate
